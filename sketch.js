@@ -1,16 +1,46 @@
-let contEl = document.querySelector('.container')
+const contEl = document.querySelector('.container')
+const reset = document.querySelector('.reset')
+const size = document.querySelector('.slider')
 
 let gridbox = () => {
-    for (i = 0; i < 440; i++) {
-    const box = document.createElement('div')
-    box.classList.add('squares')
-    contEl.appendChild(box)
-}
+    contEl.innerHTML = ""
+    for (i = 0; i < 256; i++) {
+        let box = document.createElement('div')
+        contEl.style.gridTemplateColumns = `repeat(${size.value}, 1fr)`
+        contEl.style.gridTemplateRows = `repeat(${size.value}, 1fr)`
+        box.style.backgroundColor = 'white'
+        box.addEventListener('mouseover', (e) => {
+            box.setAttribute('style', 'background-color: gray')
+        })
+        contEl.appendChild(box)
+    }
 }
 
-const moveOverSquare = document.querySelector('div');
-moveOverSquare.addEventListener('mouseover', (e) => {
-    e.target.classList.replace('squares', 'draw')
+let updateGridbox = () => {
+    contEl.innerHTML = ""
+    for (i = 0; i < size.value * size.value; i++) {
+        let box = document.createElement('div')
+        contEl.style.gridTemplateColumns = `repeat(${size.value}, 1fr)`
+        contEl.style.gridTemplateRows = `repeat(${size.value}, 1fr)`
+        box.style.backgroundColor = 'white'
+        box.addEventListener('mouseover', (e) => {
+            box.setAttribute('style', 'background-color: gray')
+        })
+        contEl.appendChild(box)
+    }
+}
+
+reset.addEventListener('click', (e) => {
+    if (size.value == 16) {
+        gridbox()
+    } else {
+        updateGridbox()
+    }
+})
+
+size.addEventListener('change', () => {
+    contEl.innerHTML = "";
+    updateGridbox()
 })
 
 gridbox()
